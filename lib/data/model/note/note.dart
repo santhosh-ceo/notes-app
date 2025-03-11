@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 
 part 'note.g.dart';
 
-@HiveType(typeId: 0)
+@HiveType(typeId: 1)
 class Note extends Equatable with HiveObjectMixin {
   @HiveField(0)
   final String id;
@@ -18,9 +18,12 @@ class Note extends Equatable with HiveObjectMixin {
 
   factory Note.fromJson(Map<String, dynamic> json) {
     return Note(
-        id: json['id'], title: json['title'], content: json['content']);
+      id: json['id'] as String,
+      title: json['title'] as String,
+      content: json['content'] as String,
+    );
   }
+
   @override
-  // TODO: implement props
-  List<Object?> get props => [id, title, content];
+  List<Object> get props => [id, title, content];
 }

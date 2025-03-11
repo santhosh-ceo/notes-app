@@ -8,7 +8,7 @@ import 'package:notes_app/presentation/notes/bloc/note_event.dart';
 import 'locator.dart';
 
 class NoteApp extends StatelessWidget {
-  NoteApp({super.key});
+  const NoteApp({super.key});
 
   @override
   Widget build(BuildContext context) {

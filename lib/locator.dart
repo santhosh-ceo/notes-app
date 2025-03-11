@@ -14,9 +14,20 @@ import 'domain/usecases/note_usecases.dart';
 final getIt = GetIt.instance;
 
 Future<void> setupDependencies() async {
-  getIt.registerLazySingleton(() => Hive.box<User>('users'));
-  getIt.registerLazySingleton(() => Hive.box<Note>('notes'));
-  getIt.registerLazySingleton(() => const FlutterSecureStorage());
+
+  if (!Hive.isBoxOpen('users')) {
+    await Hive.openBox<User>('users');
+  }
+  if (!Hive.isBoxOpen('notes')) {
+    await Hive.openBox<Note>('notes');
+  }
+
+
+
+  getIt.registerSingleton<Box<User>>(Hive.box<User>('users'));
+  getIt.registerSingleton<Box<Note>>(Hive.box<Note>('notes'));
+  getIt.registerSingleton<FlutterSecureStorage>(const FlutterSecureStorage());
+
 
   getIt.registerLazySingleton<AuthRepository>(() => AuthRepositoryImpl(getIt(), getIt()));
   getIt.registerLazySingleton<NotesRepository>(() => NotesRepositoryImpl(getIt()));
